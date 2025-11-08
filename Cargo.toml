@@ -14,4 +14,8 @@ categories = ["development-tools"]
 [features]
 release_also = []
 
+[[example]]
+name = "basic-example"
+path = "examples/basic-example.rs"
+
 [dependencies]
