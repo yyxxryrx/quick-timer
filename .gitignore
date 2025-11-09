@@ -2,3 +2,4 @@
 /.vscode
 /.zed
 /target
+Cargo.lock
