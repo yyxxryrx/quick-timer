@@ -93,6 +93,8 @@
 ///
 /// ```rust
 /// // Basic usage - times a block of code
+/// use quick_timer::timer;
+///
 /// timer! {
 ///     // your code here
 /// }
@@ -101,6 +103,12 @@
 /// timer!(# "My Tag" {
 ///     // your code here
 /// });
+///
+/// // Alternative syntax
+/// timer! {
+///     # "My Tag"
+///     // your code here
+/// }
 ///
 /// // Alternative syntax with tag
 /// timer!(tag: "My Tag", block: {
