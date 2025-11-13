@@ -255,54 +255,47 @@ macro_rules! timer {
 /// assert_eq!(result, 2);
 /// ```
 macro_rules! timer {
+    (tag: $tag:literal, block: { $expr:expr }) => { $expr };
     // Executes a block without timing (literal tag version)
     (tag: $tag:literal, block: $block:block) => {
         $block
     };
+    (tag: $tag:ident, block: { $expr:expr }) => { $expr };
     // Executes a block without timing (identifier tag version)
     (tag: $tag:ident, block: $block:block) => {
         $block
     };
+    (block: { $expr:expr }) => { $expr };
     // Executes a block without timing (default block version)
     (block: $block:block) => {
         $block
     };
-    // Executes a block without timing (duplicate rule for consistency)
-    (block: $block:block) => {
-        $crate::timer!(block: $block)
-    };
+    ({ $expr:expr }) => { $expr };
+    (#$tag:literal { $expr:expr }) => { $expr };
     // Executes a block without timing (shorthand literal tag syntax)
     (#$tag:literal $block:block) => {
         $crate::timer!(block: $block)
     };
+    (#$tag:ident { $expr:expr }) => { $expr };
     // Executes a block without timing (shorthand identifier tag syntax)
     (#$tag:ident $block:block) => {
         $crate::timer!(block: $block)
     };
-    (#$tag:literal $literal:literal) => { $literal };
-    (#$tag:literal $ident:ident) => { $ident };
     (#$tag:literal $expr:expr) => { $expr };
-    (#$tag:literal $stmt:stmt) => { $stmt };
     // Executes a block without timing (shorthand literal tag syntax, braceless form)
     (#$tag:literal $($tt:tt)*) => {
         $crate::timer!(block: {
             $($tt)*
         })
     };
-    (#$tag:ident $literal:literal) => { $literal };
-    (#$tag:ident $ident:ident) => { $ident };
     (#$tag:ident $expr:expr) => { $expr };
-    (#$tag:ident $stmt:stmt) => { $stmt };
     // Executes a block without timing (shorthand identifier tag syntax, braceless form)
     (#$tag:ident $($tt:tt)*) => {
         $crate::timer!(block: {
             $($tt)*
         })
     };
-    ($literal:literal) => { $literal };
-    ($ident:ident) => { $ident };
     ($expr:expr) => { $expr };
-    ($stmt:stmt) => { $stmt };
     // Executes a block without timing (default braceless form)
     ($($tt:tt)*) => {
         $crate::timer!(block: {
